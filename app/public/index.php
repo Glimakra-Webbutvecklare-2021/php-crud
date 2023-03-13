@@ -1,3 +1,7 @@
+<?php 
+    session_start();
+    require_once "database.php";
+?>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,27 +12,34 @@
 </head>
 <body>
     <main>
+    <?php 
+    // Write out message from other pages if exists
+    if (isset($_SESSION['message']) && !empty($_SESSION['message'])) {
+        echo "<article><aside><p>". $_SESSION['message'] . "</p></aside></article>";
+        unset( $_SESSION['message']); // remove it once it has been written
+    }
+    ?>
     <h1>Journal</h1>
     <a href="create.php">Add Journal Entry</a>
     <?php 
-        require_once "database.php";
-
         // Query the database
         $sqlquery = "SELECT * FROM journal";
         $result = $pdo->query($sqlquery);
 
-        // var_dump($result->fetch());
+        // Render the data
+        echo "<section>";
         while($row = $result->fetch()) {
             $id = $row['id'];
-            echo "<div>
+            echo "<aside>
                     <p>" . $row['text'] . "</p>
                     <div>
                         <a href='delete.php?id=$id'>Delete</a>
+                        <a href='edit.php?id=$id'>Edit</a>
                     </div>
-                </div> <hr>";
+                </aside>
+                <hr>";
         }
-
-        // Render the data
+        echo "</section>";
 
     ?>
     </main>

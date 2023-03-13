@@ -1,10 +1,10 @@
 <?php
+    session_start();
     require_once "database.php";
-
+    
     // Query the database
     $sqlquery = "SELECT * FROM journal";
     $result = $pdo->query($sqlquery);
-    // Render the data
 
     // Handle form submission
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -17,13 +17,12 @@
 
             $sqlStatement = $pdo->query($sqlquery);
             
+            $_SESSION['message'] = "Successfully added journal entry";
+
             header("location: index.php");
-            // echo "<p>Successfully added journal entry</p>";
         }
     }  
 ?>
-
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -37,7 +36,7 @@
     <h1>Create Journal Entry</h1>
     <a href="index.php">Back</a>
 
-    <form action="" method="post">
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
         <label for="text">Journal Text</label>
         <input type="text" name="text" id="text" required>
 
