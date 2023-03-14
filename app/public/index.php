@@ -24,21 +24,33 @@
     <?php 
         // Query the database
         $sqlquery = "SELECT * FROM journal";
-        $result = $pdo->query($sqlquery);
+        $stmt = $pdo->prepare($sqlquery);
+        $stmt->execute();
+        $journal_entries = $stmt->fetchAll();
 
         // Render the data
         echo "<section>";
-        while($row = $result->fetch()) {
-            $id = $row['id'];
+        foreach ($journal_entries as $entry) {
             echo "<aside>
-                    <p>" . $row['text'] . "</p>
-                    <div>
-                        <a href='delete.php?id=$id'>Delete</a>
-                        <a href='edit.php?id=$id'>Edit</a>
-                    </div>
-                </aside>
-                <hr>";
+                     <p>" . $entry['text'] . "</p>
+                     <div>
+                         <a href='delete.php?id=$id'>Delete</a>
+                         <a href='edit.php?id=$id'>Edit</a>
+                     </div>
+                 </aside>";
         }
+
+        // while($row = $result->fetch()) {
+        //     $id = $row['id'];
+        //     echo "<aside>
+        //             <p>" . $row['text'] . "</p>
+        //             <div>
+        //                 <a href='delete.php?id=$id'>Delete</a>
+        //                 <a href='edit.php?id=$id'>Edit</a>
+        //             </div>
+        //         </aside>
+        //         <hr>";
+        // }
         echo "</section>";
 
     ?>
