@@ -1,6 +1,10 @@
 <?php 
     session_start();
     require_once "database.php";
+
+    if (!isset($_SESSION["user_id"])) {
+        header("location: login.php");
+    }
 ?>
 <html lang="en">
 <head>
@@ -19,6 +23,7 @@
         unset( $_SESSION['message']); // remove it once it has been written
     }
     ?>
+    <?php echo "<a href='logout.php'>Logout</a>" ?>
     <h1>Journal</h1>
     <a href="create.php">Add Journal Entry</a>
     <?php 
