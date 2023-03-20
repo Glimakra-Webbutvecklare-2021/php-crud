@@ -14,9 +14,6 @@
         if (!empty($form_text)) {
             // Prepare sql query to insert new journal entry
             $sqlquery = "UPDATE journal SET text='$form_text' WHERE id=$form_id";
-            
-            echo $sqlquery;
-
             $sqlStatement = $pdo->query($sqlquery);
 
             $_SESSION['message'] = "Successfully edited journal entry";
@@ -51,8 +48,8 @@
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
             <label for="text">Journal Text</label>
             <input type="number" name="id" id="id" value="<?= $id ?>" hidden>
-            <input type="text" name="text" id="text" value="<?= $old_text ?>" required>
-
+            <textarea name="text" id="text" cols="30" rows="10">
+            </textarea>
             <input type="submit" value="submit">
         </form>
     </main>

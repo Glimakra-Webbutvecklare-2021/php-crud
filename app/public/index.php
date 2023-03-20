@@ -1,6 +1,7 @@
 <?php 
     session_start();
     require_once "database.php";
+    require_once "Parsedown.php";
 ?>
 <html lang="en">
 <head>
@@ -19,12 +20,15 @@
         unset( $_SESSION['message']); // remove it once it has been written
     }
     ?>
+    <a href="logout.php">Logout</a>
     <h1>Journal</h1>
     <a href="create.php">Add Journal Entry</a>
     <?php 
         // Query the database
         $sqlquery = "SELECT * FROM journal";
         $result = $pdo->query($sqlquery);
+        $Parsedown = new Parsedown();
+
 
         // Render the data
         echo "<section>";
@@ -35,6 +39,7 @@
                     <div>
                         <a href='delete.php?id=$id'>Delete</a>
                         <a href='edit.php?id=$id'>Edit</a>
+                        <a href='view.php?id=$id'>View</a>
                     </div>
                 </aside>
                 <hr>";
